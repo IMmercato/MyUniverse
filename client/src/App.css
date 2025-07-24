@@ -19,6 +19,9 @@ body {
   flex-wrap: wrap;
   z-index: -1;
 }
+.desktop i {
+  font-size: 50px;
+}
 
 .logo {
   height: 6em;
@@ -64,9 +67,8 @@ body {
   z-index: 2;
 }
 .card.expanded {
-  width: 350px;
-  height: 480px;
-  z-index: 2;
+  z-index: 100;
+  animation: card-pop 0.4s ease forwards;
 }
 .card.minimized {
   width: 175px;
@@ -126,17 +128,15 @@ body {
   align-items: center;
 }
 
-@keyframes logo-spin {
+@keyframes card-pop {
   from {
-    transform: rotate(0deg);
+    width: 175px;
+    height: 240px;
+    transform: translateY(0) rotate(var(--angle));
   }
   to {
-    transform: rotate(360deg);
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
+    width: 350px;
+    height: 480px;
+    transform: scale() translateY(-40px) rotate(var(--angle));
   }
 }
