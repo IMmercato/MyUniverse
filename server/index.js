@@ -11,6 +11,9 @@ app.use(cors(corsOptions));
 app.get("/api", (req, res) => {
     res.json({ names: ["lebronita", "Charse Lecrec", "Steph dududu Verstaphen"] });
 });
+app.get("/api/yes", (req, res) => {
+    res.json(data);
+});
 
 app.listen(8080, () => {
     console.log("Server started on port 8080");
