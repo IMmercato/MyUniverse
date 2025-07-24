@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import './App.css'
 import lescream from "./assets/lebron-scream.svg"
+import leferrari from "./assets/leferrari.webp"
 import axios from "axios"
 
 function App() {
@@ -59,6 +60,37 @@ function App() {
           })
         }
       </div >
+      <div className='window'>
+        <div className='actions'>
+          <div>
+            <i className='material-icons'>minimize</i>
+          </div>
+          <div>
+            <i className='material-icons'>ad</i>
+          </div>
+          <div className='close'>
+            <i className='material-icons'>close</i>
+          </div>
+        </div>
+        <div className='content'>
+          <div>
+            <img src={leferrari} alt="Le-Ferrari" />
+            <p></p>
+          </div>
+          <div>
+            <img src="" alt="" />
+            <p></p>
+          </div>
+          <div>
+            <img src="" alt="" />
+            <p></p>
+          </div>
+          <div>
+            <img src="" alt="" />
+            <p></p>
+          </div>
+        </div>
+      </div>
     </>
   )
 }

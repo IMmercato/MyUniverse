@@ -32,6 +32,21 @@ body {
   text-align: center;
   cursor: pointer;
 }
+.window {
+  border: solid 5px rgba(160, 235, 255, 0.1);
+  width: auto;
+}
+.actions {
+  display: flex;
+  flex-direction: row;
+  width: auto;
+}
+.content {
+  width: auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
 
 .logo {
   height: 6em;
