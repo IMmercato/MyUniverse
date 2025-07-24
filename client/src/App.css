@@ -1,0 +1,82 @@
+#root {
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+  height: 100vh;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #FDB927);
+}
+
+.card {
+  border: 10px solid #FDB927;
+  border-radius: 8px;
+  padding: 5px;
+  background-color: blanchedalmond;
+  color: black;
+  width: 350px;
+  height: 480px;
+}
+.nav{
+  display: flex;
+  flex-direction: row;
+  height: 50px;
+  align-items: center;
+}
+.rarity{
+  border: 1px solid gray;
+  border-radius: 8px;
+  width: 60px;
+  height: 15px;
+  font-size: xx-small;
+  margin-right: 5px;
+  background-image: linear-gradient(top right, #FFFFFF 0%, #808080 100%);
+}
+.nav h1 {
+  font-size: larger;
+  line-height: 1.1;
+}
+.power {
+  display: flex;
+  flex-direction: row;
+  margin: 0 5px 0 auto;
+  align-items: center;
+}
+.power h6 h1 {
+  margin: 0;
+}
+.power h1 {
+  font-size: x-large;
+}
+.nav i {
+  color: #ee6730;
+}
+.player {
+  border: 5px solid gray;
+  margin: 5px;
+  width: auto;
+  height: 200px;
+  justify-content: center;
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
