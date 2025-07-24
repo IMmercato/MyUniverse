@@ -25,8 +25,13 @@ function App() {
     <>
       <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"></link>
       <div className='desktop'>
-        <div>
+        <div className='folder' style={{ top: '20px', left: '50px' }}>
           <i className='material-icons'>folder</i>
+          <p>Pics</p>
+        </div>
+        <div className="folder" style={{ top: '80px', right: '20px' }}>
+          <i className="material-icons">folder</i>
+          <p>Memory</p>
         </div>
       </div>
       <div className='deck'>
