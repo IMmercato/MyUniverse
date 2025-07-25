@@ -7,6 +7,8 @@ body {
 #root {
   display: flex;
   flex-wrap: wrap;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 .desktop {
