@@ -27,6 +27,17 @@ body {
 .desktop p {
   margin: 0;
 }
+.music {
+  position: fixed;
+  margin: 20px;
+  top: 0;
+  right: 0;
+  width: min-content;
+  height: min-content;
+}
+.music i {
+  font-size: 20px;
+}
 .folder {
   position: absolute;
   display: flex;

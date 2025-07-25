@@ -5,17 +5,38 @@ import './App.css'
 import lescream from './assets/lebron-scream.svg'
 import lastnight from './assets/lastnight.jpg'
 import leferrari from './assets/leferrari.webp'
+import music from './assets/ben.mp3'
 
 function App() {
   const [cards, setCards] = useState([])
   const [selected, setSelected] = useState(null)
   const [openWindow, setOpenWindow] = useState(false)
+  const [isMuted, setIsMuted] = useState(true)
   const winRef = useRef(null)
+  const musicRef = useRef(new Audio(music))
 
   useEffect(() => {
     axios.get('http://localhost:8080/api/yes')
       .then(res => setCards(res.data))
   }, [])
+
+  useEffect(() => {
+    musicRef.current.loop = true
+    musicRef.current.volume = 0.5
+    musicRef.current.muted = isMuted
+    const playAudio = () => {
+      musicRef.current.play().catch(e => console.warn('AutoPlay blocked: ', e))
+      window.removeEventListener('click', playAudio)
+    }
+    window.addEventListener('click', playAudio)
+    return () => {
+      window.removeEventListener('click', playAudio)
+    }
+  }, [isMuted])
+
+  const toggleMute = () => {
+    setIsMuted(prev => !prev)
+  }
 
   useEffect(() => {
     if (!openWindow || !winRef.current) return
@@ -46,6 +67,9 @@ function App() {
   return (
     <>
       <div className="desktop">
+        <button onClick={toggleMute} className='music'>
+          {isMuted ? (<i className='material-icons'>volume_off</i>) : (<i className='material-icons'>volume_up</i>)}
+        </button>
         <div className="folder" style={{ top: 20, left: 50 }} onClick={toggleWindow}>
           <i className="material-icons">folder</i>
           <p>Pics</p>
