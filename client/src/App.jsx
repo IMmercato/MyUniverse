@@ -34,9 +34,11 @@ function App() {
         draggable.destroy()
       }
     }
-  }, [openWindow]);
+  }, [openWindow])
 
-  const handleCardClick = idx => setSelected(curr => (curr === idx ? null : idx))
+  const handleCardClick = idx => {
+    setSelected(curr => (curr === idx ? null : idx))
+  }
 
   const toggleWindow = () => setOpenWindow(v => !v)
   const closeWindow = () => setOpenWindow(false)
@@ -73,7 +75,7 @@ function App() {
                 <i className="material-icons">sports_basketball</i>
               </div>
               <div className="player">
-                <img src={lescream} alt="LeScream" className="logo" />
+                <img src={lescream} alt={card.name} className="logo" />
               </div>
               <div className="description">
                 <p>{card.description}</p>
@@ -82,6 +84,28 @@ function App() {
           )
         })}
       </div>
+      {selected !== null && (
+        <div className="overlay" onClick={() => setSelected(null)}>
+          <div onClick={e => e.stopPropagation()}>
+            <div className="card" style={{ ['--angle']: '0deg' }}>
+              <div className="nav">
+                <div className="rarity">{cards[selected].rarity}</div>
+                <h1>{cards[selected].name}</h1>
+                <div className="power">
+                  <h6>PS</h6><h1>{cards[selected].ps}</h1>
+                </div>
+                <i className="material-icons">sports_basketball</i>
+              </div>
+              <div className="player">
+                <img src={lescream} alt={cards[selected].name} className="logo" />
+              </div>
+              <div className="description">
+                <p>{cards[selected].description}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
       {openWindow && (
         <div ref={winRef} className="window">
           <div className="actions">
