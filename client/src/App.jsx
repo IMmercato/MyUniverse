@@ -6,9 +6,12 @@ import leferrari from "./assets/leferrari.webp"
 import axios from "axios"
 
 function App() {
-  const [array, setArray] = useState([]);
-  const [selectedCardIndex, setSelectedCardIndex] = useState(null);
+  const [array, setArray] = useState([])
+  const [selectedCardIndex, setSelectedCardIndex] = useState(null)
   const [openWindow, setOpenWindow] = useState(false)
+  const [windowPosition, setWindowPosition] = useState({ x: 100, y: 100 })
+  const [isDragging, setIsDragging] = useState(false)
+  const [offset, setOffset] = useState({ x: 0, y: 0 })
 
   const fetchAPI = async () => {
     const response = await axios.get("http://localhost:8080/api/yes")
@@ -25,17 +28,47 @@ function App() {
   }
 
   const toggleWindow = () => {
-    console.log("Folder clicked, toggling window")
     setOpenWindow(prevState => !prevState)
   }
-
   const closeWindow = () => {
     setOpenWindow(false)
   }
 
+  const handleMouseDown = (e) => {
+    setIsDragging(true)
+    setOffset({
+      x: e.clientX - windowPosition.x,
+      y: e.clientY - windowPosition.y
+    })
+  }
+  const handleMouseMove = (e) => {
+    if (isDragging) {
+      setWindowPosition({
+        x: e.clientX - offset.x,
+        y: e.clientY - offset.y
+      })
+    }
+  };
+  const handleMouseUp = () => {
+    setIsDragging(false)
+  }
+
+  useEffect(() => {
+    if (isDragging) {
+      window.addEventListener('mousemove', handleMouseMove)
+      window.addEventListener('mouseup', handleMouseUp)
+    } else {
+      window.removeEventListener('mousemove', handleMouseMove)
+      window.removeEventListener('mouseup', handleMouseUp)
+    }
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove)
+      window.removeEventListener('mouseup', handleMouseUp)
+    }
+  }, [isDragging])
+
   return (
     <>
-      <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"></link>
       <div className='desktop'>
         <div className='folder' style={{ top: '20px', left: '50px' }} onClick={toggleWindow}>
           <i className='material-icons'>folder</i>
@@ -72,7 +105,7 @@ function App() {
         }
       </div>
       {openWindow && (
-        <div className='window'>
+        <div className='window' style={{ left: windowPosition.x, top: windowPosition.y }} onMouseDown={handleMouseDown}>
           <div className='actions'>
             <div>
               <i className='material-icons'>minimize</i>
@@ -107,5 +140,4 @@ function App() {
     </>
   )
 }
-
 export default App
