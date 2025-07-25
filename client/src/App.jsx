@@ -1,16 +1,18 @@
 import { useState, useEffect } from 'react'
 import './App.css'
 import lescream from "./assets/lebron-scream.svg"
+import lastnight from "./assets/lastnight.jpg"
 import leferrari from "./assets/leferrari.webp"
 import axios from "axios"
 
 function App() {
-  const [array, setArray] = useState([])
-  const [selectedCardIndex, setSelectedCardIndex] = useState(null)
+  const [array, setArray] = useState([]);
+  const [selectedCardIndex, setSelectedCardIndex] = useState(null);
+  const [openWindow, setOpenWindow] = useState(false)
 
   const fetchAPI = async () => {
     const response = await axios.get("http://localhost:8080/api/yes")
-    setArray(response.data)
+    setArray(response.data);
     console.log(response.data)
   }
 
@@ -22,11 +24,20 @@ function App() {
     setSelectedCardIndex(selectedCardIndex === index ? null : index)
   }
 
+  const toggleWindow = () => {
+    console.log("Folder clicked, toggling window")
+    setOpenWindow(prevState => !prevState)
+  }
+
+  const closeWindow = () => {
+    setOpenWindow(false)
+  }
+
   return (
     <>
       <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"></link>
       <div className='desktop'>
-        <div className='folder' style={{ top: '20px', left: '50px' }}>
+        <div className='folder' style={{ top: '20px', left: '50px' }} onClick={toggleWindow}>
           <i className='material-icons'>folder</i>
           <p>Pics</p>
         </div>
@@ -39,7 +50,7 @@ function App() {
         {
           array.map((item, index) => {
             const spread = 7
-            const angle = `${(index - array.length / 2) * spread}deg`;
+            const angle = `${(index - array.length / 2) * spread}deg`
             return (
               <div key={index} className={`card ${selectedCardIndex === index ? 'expanded' : 'minimized'}`} onClick={() => handleCard(index)} style={{ '--angle': angle }}>
                 <div className='nav'>
@@ -56,41 +67,43 @@ function App() {
                   <p>{item.description}</p>
                 </div>
               </div>
-            );
+            )
           })
         }
-      </div >
-      <div className='window'>
-        <div className='actions'>
-          <div>
-            <i className='material-icons'>minimize</i>
-          </div>
-          <div>
-            <i className='material-icons'>ad</i>
-          </div>
-          <div className='close'>
-            <i className='material-icons'>close</i>
-          </div>
-        </div>
-        <div className='content'>
-          <div>
-            <img src={leferrari} alt="Le-Ferrari" />
-            <p></p>
-          </div>
-          <div>
-            <img src="" alt="" />
-            <p></p>
-          </div>
-          <div>
-            <img src="" alt="" />
-            <p></p>
-          </div>
-          <div>
-            <img src="" alt="" />
-            <p></p>
-          </div>
-        </div>
       </div>
+      {openWindow && (
+        <div className='window'>
+          <div className='actions'>
+            <div>
+              <i className='material-icons'>minimize</i>
+            </div>
+            <div>
+              <i className='material-icons'>ad</i>
+            </div>
+            <div className='close' onClick={closeWindow}> {/* Close button */}
+              <i className='material-icons'>close</i>
+            </div>
+          </div>
+          <div className='content'>
+            <div>
+              <img src={lastnight} alt="MyFriends" />
+              <p>Last Night</p>
+            </div>
+            <div>
+              <img src={leferrari} alt="Le-Ferrari" />
+              <p>'24</p>
+            </div>
+            <div>
+              <img src={lescream} alt="Le-Scream" />
+              <p>Le-Scream</p>
+            </div>
+            <div>
+              <img src={lastnight} alt="last" />
+              <p>Friends</p>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   )
 }

@@ -17,7 +17,7 @@ body {
   height: 100vh;
   display: flex;
   flex-wrap: wrap;
-  z-index: -1;
+  z-index: 0;
 }
 .desktop i {
   font-size: 50px;
@@ -31,21 +31,45 @@ body {
   flex-direction: column;
   text-align: center;
   cursor: pointer;
+  z-index: 1;
 }
 .window {
+  position: fixed;
   border: solid 5px rgba(160, 235, 255, 0.1);
-  width: auto;
+  max-width: 500px;
+  max-height: 300px;
+  background-color: gray;
+  z-index: 10;
 }
 .actions {
   display: flex;
   flex-direction: row;
   width: auto;
+  justify-content: flex-end;
+  padding: 5px;
+  background-color: rgba(0, 0, 0, 0);
+}
+.actions div {
+  margin-left: 10px;
+  cursor: pointer;
 }
 .content {
-  width: auto;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  padding: 10px;
+}
+.content div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin: 5px;
+  cursor: pointer;
+}
+.content img {
+  max-width: 50px;
+  height: 50px;
 }
 
 .logo {
@@ -67,7 +91,7 @@ body {
   transform: translateX(-50%);
   gap: 20px;
   height: auto;
-  z-index: 1;
+  z-index: 5;
   pointer-events: none;
 }
 .card {
@@ -89,7 +113,7 @@ body {
 .card:hover {
   transform: scale(1.05) rotate(var(--angle));
   box-shadow: 0 8px 16px rgba(0,0,0,0.3);
-  z-index: 2;
+  z-index: 6;
 }
 .card.expanded {
   z-index: 100;
