@@ -7,9 +7,16 @@ import lastnight from './assets/lastnight.jpg'
 import leferrari from './assets/leferrari.webp'
 import music from './assets/ben.mp3'
 
+const imageMapping = {
+  "lastnight": lastnight,
+  "lescream": lescream,
+  "leferrari": leferrari
+};
+
 function App() {
   const [cards, setCards] = useState([])
   const [selected, setSelected] = useState(null)
+  const [folderContent, setFolderContent] = useState(null)
   const [openWindow, setOpenWindow] = useState(false)
   const [isMuted, setIsMuted] = useState(true)
   const winRef = useRef(null)
@@ -19,6 +26,14 @@ function App() {
     axios.get('http://localhost:8080/api/yes')
       .then(res => setCards(res.data))
   }, [])
+
+  const fetchFolderContent = (folder) => {
+    axios.get('http://localhost:8080/api/window')
+      .then(res => {
+        setFolderContent(res.data[folder])
+      })
+      .catch(err => console.err(err))
+  }
 
   useEffect(() => {
     musicRef.current.loop = true
@@ -61,7 +76,10 @@ function App() {
     setSelected(curr => (curr === idx ? null : idx))
   }
 
-  const toggleWindow = () => setOpenWindow(v => !v)
+  const toggleWindow = (folder) => {
+    fetchFolderContent(folder)
+    setOpenWindow(v => !v)
+  }
   const closeWindow = () => setOpenWindow(false)
 
   return (
@@ -70,11 +88,11 @@ function App() {
         <button onClick={toggleMute} className='music'>
           {isMuted ? (<i className='material-icons'>volume_off</i>) : (<i className='material-icons'>volume_up</i>)}
         </button>
-        <div className="folder" style={{ top: 20, left: 50 }} onClick={toggleWindow}>
+        <div className="folder" style={{ top: 20, left: 50 }} onClick={() => toggleWindow('Pics')}>
           <i className="material-icons">folder</i>
           <p>Pics</p>
         </div>
-        <div className="folder" style={{ top: 80, right: 20 }}>
+        <div className="folder" style={{ top: 80, right: 20 }} onClick={() => toggleWindow('Memory')}>
           <i className="material-icons">folder</i>
           <p>Memory</p>
         </div>
@@ -130,7 +148,7 @@ function App() {
           </div>
         </div>
       )}
-      {openWindow && (
+      {openWindow && folderContent && (
         <div ref={winRef} className="window">
           <div className="actions">
             <i className="material-icons">minimize</i>
@@ -140,10 +158,17 @@ function App() {
             </div>
           </div>
           <div className="content">
-            <div><img src={lastnight} alt="" /><p>Last Night</p></div>
-            <div><img src={leferrari} alt="" /><p>'24</p></div>
-            <div><img src={lescream} alt="" /><p>Le-Scream</p></div>
-            <div><img src={lastnight} alt="" /><p>Friends</p></div>
+          { Array.isArray(folderContent) ? (
+              folderContent.map((item, index) => (
+                <div key={index}>
+                  <img src={imageMapping[item.pic]} alt={item.pic} />
+                  <p>{item.name}</p>
+                </div>
+              ))
+            ) : (
+              <p>{folderContent.error}</p>
+            )
+          }
           </div>
         </div>
       )}

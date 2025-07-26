@@ -1,0 +1,19 @@
+{
+    "Pics": [
+        {
+            "pic": "lastnight",
+            "name": "Last Night"
+        },
+        {
+            "pic": "leferrari",
+            "name": "'24"
+        },
+        {
+            "pic": "lastnight",
+            "name": "Friends"
+        }
+    ],
+    "Memory": {
+        "error": "Internal Server Error, the devoloper lost his memory."
+    }
+}
