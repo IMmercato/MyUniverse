@@ -5,6 +5,7 @@ import './App.css'
 import lescream from './assets/lebron-scream.svg'
 import lastnight from './assets/lastnight.jpg'
 import leferrari from './assets/leferrari.webp'
+import knight from './assets/knight.svg'
 import music from './assets/ben.mp3'
 
 const imageMapping = {
@@ -82,6 +83,21 @@ function App() {
   }
   const closeWindow = () => setOpenWindow(false)
 
+  $(document).ready(function () {
+    $('#terminal').terminal({
+      npm: function (command) {
+        if (command === 'run start') {
+          this.echo('Error: Command "npm run start" failed.')
+        } else {
+          this.echo('Unknown command: ' + command)
+        }
+      }
+    }, {
+      greetings: 'Welcome to developer nightmare...',
+      prompt: 'shit@dev: ~$ '
+    })
+  })
+
   return (
     <>
       <div className="desktop">
@@ -96,6 +112,8 @@ function App() {
           <i className="material-icons">folder</i>
           <p>Memory</p>
         </div>
+        <img src={knight} alt="Knight" style={{ left: '25%', top: '10%', position: 'absolute' }} />
+        <div id='terminal'></div>
       </div>
       <div className="deck">
         {cards.map((card, i) => {
@@ -158,7 +176,7 @@ function App() {
             </div>
           </div>
           <div className="content">
-          { Array.isArray(folderContent) ? (
+            {Array.isArray(folderContent) ? (
               folderContent.map((item, index) => (
                 <div key={index}>
                   <img src={imageMapping[item.pic]} alt={item.pic} />
@@ -168,7 +186,7 @@ function App() {
             ) : (
               <p>{folderContent.error}</p>
             )
-          }
+            }
           </div>
         </div>
       )}
