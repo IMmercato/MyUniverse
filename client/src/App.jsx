@@ -7,6 +7,7 @@ import lastnight from './assets/lastnight.jpg'
 import leferrari from './assets/leferrari.webp'
 import knight from './assets/knight.svg'
 import music from './assets/ben.mp3'
+import Terminal from './components/Terminal'
 
 const imageMapping = {
   "lastnight": lastnight,
@@ -20,6 +21,7 @@ function App() {
   const [folderContent, setFolderContent] = useState(null)
   const [openWindow, setOpenWindow] = useState(false)
   const [isMuted, setIsMuted] = useState(true)
+  const [showTerminal, setShowTerminal] = useState(false)
   const winRef = useRef(null)
   const musicRef = useRef(new Audio(music))
 
@@ -82,21 +84,9 @@ function App() {
     setOpenWindow(v => !v)
   }
   const closeWindow = () => setOpenWindow(false)
-
-  $(document).ready(function () {
-    $('#terminal').terminal({
-      npm: function (command) {
-        if (command === 'run start') {
-          this.echo('Error: Command "npm run start" failed.')
-        } else {
-          this.echo('Unknown command: ' + command)
-        }
-      }
-    }, {
-      greetings: 'Welcome to developer nightmare...',
-      prompt: 'shit@dev: ~$ '
-    })
-  })
+  const toggleTerminal = () => {
+    setShowTerminal(prev => !prev)
+  }
 
   return (
     <>
@@ -104,16 +94,25 @@ function App() {
         <button onClick={toggleMute} className='music'>
           {isMuted ? (<i className='material-icons'>volume_off</i>) : (<i className='material-icons'>volume_up</i>)}
         </button>
-        <div className="folder" style={{ top: 20, left: 50 }} onClick={() => toggleWindow('Pics')}>
+        <div className="folder" style={{ top: '1%', left: '2%' }} onClick={() => toggleWindow('Pics')}>
           <i className="material-icons">folder</i>
           <p>Pics</p>
         </div>
-        <div className="folder" style={{ top: 80, right: 20 }} onClick={() => toggleWindow('Memory')}>
+        <div className="folder" style={{ top: '10%', right: '2%' }} onClick={() => toggleWindow('Memory')}>
           <i className="material-icons">folder</i>
           <p>Memory</p>
         </div>
         <img src={knight} alt="Knight" style={{ left: '25%', top: '10%', position: 'absolute' }} />
-        <div id='terminal'></div>
+        <div className="folder" style={{ left: '2%', top: '20%' }} onClick={() => toggleTerminal()}>
+          <i className='material-icons'>terminal</i>
+          <p>CMD</p>
+        </div>
+        {showTerminal &&
+        <div className="window" style={{ left: '50%', top: '50%' }}>
+          <div className="actions"></div>
+          <Terminal />
+        </div>
+        }
       </div>
       <div className="deck">
         {cards.map((card, i) => {
