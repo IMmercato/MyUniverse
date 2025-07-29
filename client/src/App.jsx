@@ -109,7 +109,13 @@ function App() {
         </div>
         {showTerminal &&
         <div className="window" style={{ left: '50%', top: '50%' }}>
-          <div className="actions"></div>
+          <div className="actions">
+            <i className="material-icons">minimize</i>
+            <i className="material-icons">ad</i>
+            <div className="close">
+              <i className="material-icons">close</i>
+            </div>
+          </div>
           <Terminal />
         </div>
         }
