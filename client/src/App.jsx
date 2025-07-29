@@ -115,16 +115,16 @@ function App() {
           <p>CMD</p>
         </div>
         {showTerminal &&
-        <div className="window" style={{ left: '50%', top: '50%' }}>
-          <div className="actions">
-            <i className="material-icons">minimize</i>
-            <i className="material-icons">ad</i>
-            <div className="close">
-              <i className="material-icons" onClick={() => toggleTerminal()}>close</i>
+          <div className="window" style={{ left: '50%', top: '50%' }}>
+            <div className="actions">
+              <i className="material-icons">minimize</i>
+              <i className="material-icons">ad</i>
+              <div className="close">
+                <i className="material-icons" onClick={() => toggleTerminal()}>close</i>
+              </div>
             </div>
+            <Terminal />
           </div>
-          <Terminal />
-        </div>
         }
         <div className="chess">
           <Chess />
@@ -198,10 +198,18 @@ function App() {
                   <p>{item.name}</p>
                 </div>
               ))
-            ) : (
+            ) : folderContent?.error ? (
               <p>{folderContent.error}</p>
-            )
-            }
+            ) : typeof folderContent === 'object' ? (
+              Object.values(folderContent).map((item, index) => (
+                <div key={index}>
+                  <img src={imageMapping[item.pic]} alt={item.pic} />
+                  <p>{item.name}</p>
+                </div>
+              ))
+            ) : (
+              <p>No content to display.</p>
+            )}
           </div>
         </div>
       )}
