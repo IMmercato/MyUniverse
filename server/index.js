@@ -1,6 +1,5 @@
 const express = require("express");
 const path = require("path");
-const cors = require("cors");
 const yes = require("./data/yes.json");
 const windowData = require("./data/window.json");
 

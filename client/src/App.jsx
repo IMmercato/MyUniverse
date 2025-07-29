@@ -31,6 +31,7 @@ function App() {
   const musicRef = useRef(new Audio(music))
 
   const API_BASE = import.meta.env.VITE_API_BASE;
+  console.log("API: ", API_BASE)
 
   useEffect(() => {
     axios.get(`${API_BASE}/api/yes`)
