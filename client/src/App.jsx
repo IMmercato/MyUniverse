@@ -2,6 +2,8 @@ import { useState, useEffect, useRef } from 'react'
 import { createDraggable } from 'animejs'
 import axios from 'axios'
 import './App.css'
+import Ayrton from './assets/Forever.webp'
+import iceman from './assets/iceman.webp'
 import lescream from './assets/lebron-scream.svg'
 import lastnight from './assets/lastnight.jpg'
 import leferrari from './assets/leferrari.webp'
@@ -11,6 +13,8 @@ import Terminal from './components/Terminal'
 import Chess from './components/Chess'
 
 const imageMapping = {
+  "forever": Ayrton,
+  "iceman": iceman,
   "lastnight": lastnight,
   "lescream": lescream,
   "leferrari": leferrari
@@ -114,7 +118,7 @@ function App() {
             <i className="material-icons">minimize</i>
             <i className="material-icons">ad</i>
             <div className="close">
-              <i className="material-icons">close</i>
+              <i className="material-icons" onClick={() => toggleTerminal()}>close</i>
             </div>
           </div>
           <Terminal />
@@ -141,10 +145,10 @@ function App() {
                 <div className="power">
                   <h6>PS</h6><h1>{card.ps}</h1>
                 </div>
-                <i className="material-icons">sports_basketball</i>
+                <i className="material-icons">{card.icon}</i>
               </div>
               <div className="player">
-                <img src={lescream} alt={card.name} className="logo" />
+                <img src={imageMapping[card.img]} alt={card.name} className="logo" />
               </div>
               <div className="description">
                 <p>{card.description}</p>
@@ -163,10 +167,10 @@ function App() {
                 <div className="power">
                   <h6>PS</h6><h1>{cards[selected].ps}</h1>
                 </div>
-                <i className="material-icons">sports_basketball</i>
+                <i className="material-icons">{cards[selected].icon}</i>
               </div>
               <div className="player">
-                <img src={lescream} alt={cards[selected].name} className="logo" />
+                <img src={imageMapping[cards[selected].img]} alt={cards[selected].name} className="logo" />
               </div>
               <div className="description">
                 <p>{cards[selected].description}</p>

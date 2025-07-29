@@ -1,14 +1,34 @@
 [
   {
-    "name": "Verstappen James",
+    "name": "Lewis James",
     "description": "F1 genius with LeBron’s vertical leap — wins Grand Prixs while slam dunking on pit stops.",
     "ps": "∞",
-    "rarity": "Le-Gendary"
+    "rarity": "Le-Gendary",
+    "icon": "sports_basketball",
+    "img": "lescream"
   },
   {
     "name": "Curry Raikkonen",
     "description": "Deadliest 3-point shooter with the iciness of The Iceman. Fast, chill, untouchable.",
     "ps": "∞",
-    "rarity": "Legendary"
+    "rarity": "Legendary",
+    "icon": "sports_basketball",
+    "img": "iceman"
+  },
+  {
+    "name": "Ayrton Senna",
+    "description": "A master of rain and rhythm, Senna raced with soul and devotion, turning danger into poetry. His spirit lives on in every curve.",
+    "ps": "∞",
+    "rarity": "Sacred Legend",
+    "icon": "sports_motorsports",
+    "img": "forever"
+  },
+  {
+    "name": "Magic Alonso",
+    "description": "Old-school flair meets tactical brilliance — dishes no-look assists at the hairpin while managing tire deg. Charisma on the court, cunning in the cockpit.",
+    "ps": "∞",
+    "rarity": "Timeless",
+    "icon": "sports_basketball",
+    "img": "lescream"
   }
 ]
