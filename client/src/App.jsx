@@ -34,8 +34,11 @@ function App() {
 
   useEffect(() => {
     axios.get(`${API_BASE}/api/yes`)
-      .then(res => setCards(res.data))
-  }, [])
+      .then(res => {
+         setCards(res.data);
+       })
+      .catch(err => console.error(err));
+   }, []);
 
   const fetchFolderContent = (folder) => {
     axios.get(`${API_BASE}/api/window`)
