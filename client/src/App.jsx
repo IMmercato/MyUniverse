@@ -30,13 +30,15 @@ function App() {
   const winRef = useRef(null)
   const musicRef = useRef(new Audio(music))
 
+  const API_BASE = import.meta.env.VITE_API_BASE;
+
   useEffect(() => {
-    axios.get('http://localhost:8080/api/yes')
+    axios.get(`${API_BASE}/api/yes`)
       .then(res => setCards(res.data))
   }, [])
 
   const fetchFolderContent = (folder) => {
-    axios.get('http://localhost:8080/api/window')
+    axios.get(`${API_BASE}/api/window`)
       .then(res => {
         setFolderContent(res.data[folder])
       })
