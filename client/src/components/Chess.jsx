@@ -23,14 +23,43 @@ const Chess = () => {
             }
         }
 
-        const knightGeometry = new THREE.BoxGeometry(0.5, 0.5, 0.5)
-        const knightMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 })
-        const knight = new THREE.Mesh(knightGeometry, knightMaterial)
+        const createKnight = () => {
+            const bodyKnight = new THREE.BoxGeometry(0.5, 1, 0.5)
+            const bodyMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 })
+            const body = new THREE.Mesh(bodyKnight, bodyMaterial)
+            body.position.y = 0.5
+
+            const neckGeometry = new THREE.CylinderGeometry(0.1, 0.1, 0.5, 8)
+            const neckMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 })
+            const neck = new THREE.Mesh(neckGeometry, neckMaterial)
+            neck.position.set(0, 1.25, 0)
+            neck.rotation.x = Math.PI / 2
+
+            const headGeometry = new THREE.SphereGeometry(0.2, 8, 8)
+            const headMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 })
+            const head = new THREE.Mesh(headGeometry, headMaterial)
+            head.position.set(0, 1.75, 0)
+
+            const maneGeometry = new THREE.CylinderGeometry(0.15, 0.15, 0.3, 8)
+            const maneMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 })
+            const mane = new THREE.Mesh(maneGeometry, maneMaterial)
+            mane.position.set(0, 1.5, 0)
+            mane.rotation.x = Math.PI / 2
+
+            const knight = new THREE.Group()
+            knight.add(body)
+            knight.add(neck)
+            knight.add(head)
+            knight.add(mane)
+
+            return knight
+        }
+        const knight = createKnight()
         scene.add(knight)
 
         let knightX = 1
-        let knightY = 1
-        knight.position.set(knightX - 1, 0.25, knightY - 1)
+        let knightY = 0
+        knight.position.set(0, 0, 0)
 
         const knightMoves = [
             [2, 1], [1, 2], [-1, 2], [-2, 1],
