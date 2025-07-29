@@ -8,6 +8,7 @@ import leferrari from './assets/leferrari.webp'
 import knight from './assets/knight.svg'
 import music from './assets/ben.mp3'
 import Terminal from './components/Terminal'
+import Chess from './components/Chess'
 
 const imageMapping = {
   "lastnight": lastnight,
@@ -119,6 +120,9 @@ function App() {
           <Terminal />
         </div>
         }
+        <div className="3d">
+          <Chess />
+        </div>
       </div>
       <div className="deck">
         {cards.map((card, i) => {
