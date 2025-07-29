@@ -120,7 +120,7 @@ function App() {
           <Terminal />
         </div>
         }
-        <div className="3d">
+        <div className="chess">
           <Chess />
         </div>
       </div>

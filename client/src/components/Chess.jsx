@@ -23,6 +23,45 @@ const Chess = () => {
             }
         }
 
+        const knightGeometry = new THREE.BoxGeometry(0.5, 0.5, 0.5)
+        const knightMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 })
+        const knight = new THREE.Mesh(knightGeometry, knightMaterial)
+        scene.add(knight)
+
+        let knightX = 1
+        let knightY = 1
+        knight.position.set(knightX - 1, 0.25, knightY - 1)
+
+        const knightMoves = [
+            [2, 1], [1, 2], [-1, 2], [-2, 1],
+            [-2, -1], [-1, -2], [1, -2], [2, -1]
+        ]
+
+        function isValidMove(x, y) {
+            return x >= 0 && x < boardSize && y >= 0 && y < boardSize
+        }
+        function randomValidMove(x, y) {
+            const valid = knightMoves.filter(([dx, dy]) =>
+                isValidMove(x + dx, y + dy)
+            )
+
+            if (valid.length === 0) {
+                return [0, 0]
+            }
+
+            const idx = Math.floor(Math.random() * valid.length)
+            return valid[idx]
+        }
+
+        function animateKnight() {
+            const [dx, dy] = randomValidMove(knightX, knightY)
+            knightX += dx
+            knightY += dy
+            knight.position.set(knightX - 1, 0.25, knightY - 1)
+            setTimeout(animateKnight, 800)
+        }
+        animateKnight()
+
         camera.position.set(0, 5, 5)
         camera.lookAt(0, 0, 0)
 
