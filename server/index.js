@@ -2,6 +2,7 @@ const express = require("express");
 const path = require("path");
 const yes = require("./data/yes.json");
 const windowData = require("./data/window.json");
+const { error } = require("console");
 
 const app = express();
 
@@ -21,6 +22,10 @@ app.use(express.static(path.join(__dirname, "../client/dist")));
 
 app.get(/^\/(?!api).*/, (req, res) => {
   res.sendFile(path.join(__dirname, "../client/dist/index.html"));
+});
+
+app.use("/api", (req, res) => {
+  res.status(404).json({ error: "404 Not Found", alt: "Pls get back bro."})
 });
 
 const port = process.env.PORT || 3000;
