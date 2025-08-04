@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './Crash.css';
+import qr from '../assets/frame.png'
 
 const errorMessages = [
   "Runtime Error 302: System Failure",
@@ -85,9 +86,11 @@ const Crash = ({ onComplete }) => {
           <p>We're just collecting some error info, and then we'll restart for you.</p>
           <p className="percentage">0% complete</p>
           <div className="qr-code">
-            <div className="qr-placeholder"></div>
+            <div className="qr-placeholder">
+                <img src={qr} alt="qrcode" />
+            </div>
             <div className="qr-text">
-              <p>For more information about this issue and possible fixes, visit https://www.example.com/stopcode</p>
+              <p>For more information about this issue and possible fixes, visit nothing!</p>
               <p>Stop code: CRITICAL_PROCESS_DIED</p>
             </div>
           </div>

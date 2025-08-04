@@ -26,9 +26,10 @@ function App() {
   const [selected, setSelected] = useState(null)
   const [folderContent, setFolderContent] = useState(null)
   const [openWindow, setOpenWindow] = useState(false)
+  const [zoomedImage, setZoomedImage] = useState(null)
   const [isMuted, setIsMuted] = useState(true)
   const [showTerminal, setShowTerminal] = useState(false)
-  const [isCrashing, setIsCrashing] = useState(false);
+  const [isCrashing, setIsCrashing] = useState(false)
   const winRef = useRef(null)
   const musicRef = useRef(new Audio(music))
 
@@ -37,10 +38,10 @@ function App() {
   useEffect(() => {
     axios.get(`${API_BASE}/api/yes`)
       .then(res => {
-         setCards(res.data);
-       })
+        setCards(res.data);
+      })
       .catch(err => console.error(err));
-   }, []);
+  }, []);
 
   const fetchFolderContent = (folder) => {
     axios.get(`${API_BASE}/api/window`)
@@ -198,7 +199,7 @@ function App() {
           <div className="content">
             {Array.isArray(folderContent) ? (
               folderContent.map((item, index) => (
-                <div key={index}>
+                <div key={index} onClick={() => setZoomedImage(item)}>
                   <img src={imageMapping[item.pic]} alt={item.pic} />
                   <p>{item.name}</p>
                 </div>
@@ -215,6 +216,23 @@ function App() {
             ) : (
               <p>No content to display.</p>
             )}
+          </div>
+        </div>
+      )}
+      {zoomedImage && (
+        <div className="overlay" onClick={() => setZoomedImage(null)}>
+          <div className="zoomed-image-container" onClick={e => e.stopPropagation()}>
+            <div className="image-actions">
+              <div className="close" onClick={() => setZoomedImage(null)}>
+                <i className="material-icons">close</i>
+              </div>
+            </div>
+            <img
+              src={imageMapping[zoomedImage.pic]}
+              alt={zoomedImage.name}
+              className="zoomed-image"
+            />
+            <p className="image-title">{zoomedImage.name}</p>
           </div>
         </div>
       )}
