@@ -1,0 +1,27 @@
+.game-container {
+  position: relative;
+  width: 800px;
+  height: 500px;
+  margin: 0 auto;
+  border: 4px solid #FDB927;
+  box-shadow: 0 0 20px rgba(0,0,0,0.5);
+}
+
+.close-game {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: red;
+  color: white;
+  border: none;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  font-size: 18px;
+  cursor: pointer;
+  z-index: 10;
+}
+
+canvas {
+  display: block;
+}

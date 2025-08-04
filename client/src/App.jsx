@@ -11,6 +11,7 @@ import knight from './assets/knight.svg'
 import music from './assets/ben.mp3'
 import Terminal from './components/Terminal'
 import Chess from './components/Chess'
+import ScoobyGame from './components/ScoobyGame'
 import Crash from './components/Crash'
 
 const imageMapping = {
@@ -28,6 +29,7 @@ function App() {
   const [openWindow, setOpenWindow] = useState(false)
   const [zoomedImage, setZoomedImage] = useState(null)
   const [isMuted, setIsMuted] = useState(true)
+  const [showGame, setShowGame] = useState(false)
   const [showTerminal, setShowTerminal] = useState(false)
   const [isCrashing, setIsCrashing] = useState(false)
   const winRef = useRef(null)
@@ -115,13 +117,17 @@ function App() {
           <i className="material-icons">folder</i>
           <p>Memory</p>
         </div>
+        <div className="folder" style={{ left: '2%', top: '40%' }} onClick={() => setShowGame(true)}>
+          <i className="material-icons">sports_esports</i>
+          <p>Minigame</p>
+        </div>
         <img src={knight} alt="Knight" style={{ left: '25%', top: '10%', position: 'absolute' }} />
         <div className="folder" style={{ left: '2%', top: '20%' }} onClick={() => toggleTerminal()}>
           <i className='material-icons'>terminal</i>
           <p>CMD</p>
         </div>
         {showTerminal &&
-          <div className="window" style={{ left: '50%', top: '50%' }}>
+          <div className="window" style={{ left: '30%', top: '30%' }}>
             <div className="actions">
               <i className="material-icons">minimize</i>
               <i className="material-icons">ad</i>
@@ -234,6 +240,16 @@ function App() {
             />
             <p className="image-title">{zoomedImage.name}</p>
           </div>
+        </div>
+      )}
+      {showGame && (
+        <div className="window" style={{ width: 'min-content', height: 'min-content', left: '10%', top: '10%' }}>
+          <div className="actions">
+            <div className="close" onClick={() => setShowGame(false)}>
+              <i className="material-icons">close</i>
+            </div>
+          </div>
+          <ScoobyGame />
         </div>
       )}
       {isCrashing && <Crash onComplete={() => setIsCrashing(false)} />}
