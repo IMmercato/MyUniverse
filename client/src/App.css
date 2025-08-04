@@ -34,6 +34,7 @@ body {
   right: 0;
   width: min-content;
   height: min-content;
+  z-index: 1;
 }
 .music i {
   font-size: 20px;

@@ -1,0 +1,152 @@
+.windows-crash-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9999;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.error-window {
+  position: absolute;
+  width: 300px;
+  background-color: #f0f0f0;
+  border: 1px solid #999;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.5);
+  pointer-events: auto;
+  transition: all 0.3s ease;
+  animation: window-appear 0.2s ease-out;
+}
+
+.error-window.closing {
+  transform: scale(0.8);
+  opacity: 0;
+}
+
+@keyframes window-appear {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.error-header {
+  background-color: #003366;
+  color: white;
+  padding: 5px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: move;
+}
+
+.error-icon {
+  margin-right: 10px;
+  font-size: 16px;
+}
+
+.error-close {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 0 5px;
+}
+
+.error-close:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.error-body {
+  padding: 20px;
+  color: black;
+}
+
+.error-buttons {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+  gap: 10px;
+}
+
+.error-buttons button {
+  padding: 5px 15px;
+  min-width: 80px;
+  cursor: pointer;
+}
+
+.error-buttons button:first-child {
+  background-color: #003366;
+  color: white;
+  border: 1px solid #002244;
+}
+
+.error-buttons button:last-child {
+  background-color: #e0e0e0;
+  border: 1px solid #b0b0b0;
+}
+
+.bsod {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #0078d7;
+  color: white;
+  z-index: 10000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.bsod-content {
+  max-width: 600px;
+  text-align: center;
+}
+
+.bsod h1 {
+  font-size: 100px;
+  margin: 0;
+}
+
+.bsod h2 {
+  font-size: 30px;
+  margin: 20px 0;
+}
+
+.bsod p {
+  font-size: 18px;
+  margin: 10px 0;
+}
+
+.percentage {
+  font-size: 24px;
+  margin: 30px 0;
+}
+
+.qr-code {
+  display: flex;
+  margin-top: 40px;
+  justify-content: center;
+}
+
+.qr-placeholder {
+  width: 100px;
+  height: 100px;
+  background-color: white;
+  margin-right: 20px;
+}
+
+.qr-text {
+  text-align: left;
+  max-width: 400px;
+}

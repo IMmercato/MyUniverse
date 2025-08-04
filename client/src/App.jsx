@@ -11,6 +11,7 @@ import knight from './assets/knight.svg'
 import music from './assets/ben.mp3'
 import Terminal from './components/Terminal'
 import Chess from './components/Chess'
+import Crash from './components/Crash'
 
 const imageMapping = {
   "forever": Ayrton,
@@ -27,6 +28,7 @@ function App() {
   const [openWindow, setOpenWindow] = useState(false)
   const [isMuted, setIsMuted] = useState(true)
   const [showTerminal, setShowTerminal] = useState(false)
+  const [isCrashing, setIsCrashing] = useState(false);
   const winRef = useRef(null)
   const musicRef = useRef(new Audio(music))
 
@@ -126,7 +128,7 @@ function App() {
                 <i className="material-icons" onClick={() => toggleTerminal()}>close</i>
               </div>
             </div>
-            <Terminal />
+            <Terminal onCrash={() => setIsCrashing(true)} />
           </div>
         }
         <div className="chess">
@@ -216,6 +218,7 @@ function App() {
           </div>
         </div>
       )}
+      {isCrashing && <Crash onComplete={() => setIsCrashing(false)} />}
     </>
   )
 }
