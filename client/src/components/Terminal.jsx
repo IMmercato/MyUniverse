@@ -8,7 +8,9 @@ const Terminal = ({ onCrash }) => {
                     const command = args.join(' ').trim()
                     if (command === 'run start') {
                         this.echo('Error: Command "npm run start" failed.')
-                    } else if (command === 'install') {
+                    } else if (command === '-h') {
+                        this.echo('install \nrun start')
+                    }else if (command === 'install') {
                         this.echo('Installing dependencies... just kidding!')
                     } else if (command) {
                         this.echo('Unknown npm command: ' + command)
@@ -41,7 +43,7 @@ const Terminal = ({ onCrash }) => {
                     this.echo('😭 Hahaha poor developer...')
                 },
                 dir: function() {
-                    this.echo('Memory Pics')
+                    this.echo('Memory Pics Minigame')
                 },
                 language: function() {
                     this.echo('Available commands:')
