@@ -13,6 +13,7 @@ import Terminal from './components/Terminal'
 import Chess from './components/Chess'
 import ScoobyGame from './components/ScoobyGame'
 import Crash from './components/Crash'
+import Browser from './components/Browser'
 
 const imageMapping = {
   "forever": Ayrton,
@@ -31,8 +32,10 @@ function App() {
   const [isMuted, setIsMuted] = useState(true)
   const [showGame, setShowGame] = useState(false)
   const [showTerminal, setShowTerminal] = useState(false)
+  const [showBrowser, setShowBrowser] = useState(false)
   const [isCrashing, setIsCrashing] = useState(false)
   const winRef = useRef(null)
+  const browserRef = useRef(null)
   const musicRef = useRef(new Audio(music))
 
   const API_BASE = import.meta.env.VITE_API_BASE;
@@ -90,6 +93,25 @@ function App() {
     }
   }, [openWindow])
 
+  useEffect(() => {
+    if (!showBrowser || !browserRef.current) return
+
+    const draggable = createDraggable(browserRef.current, {
+      trigger: browserRef.current.querySelector('.browser-header'),
+      container: document.body,
+      dragSpeed: 1
+    })
+
+    draggable.setX(50)
+    draggable.setY(50)
+
+    return () => {
+      if (draggable && typeof draggable.destroy === 'function') {
+        draggable.destroy()
+      }
+    }
+  }, [showBrowser])
+
   const handleCardClick = idx => {
     setSelected(curr => (curr === idx ? null : idx))
   }
@@ -101,6 +123,9 @@ function App() {
   const closeWindow = () => setOpenWindow(false)
   const toggleTerminal = () => {
     setShowTerminal(prev => !prev)
+  }
+  const toggleBrowser = () => {
+    setShowBrowser(prev => !prev)
   }
 
   return (
@@ -120,6 +145,10 @@ function App() {
         <div className="folder" style={{ left: '2%', top: '40%' }} onClick={() => setShowGame(true)}>
           <i className="material-icons">sports_esports</i>
           <p>Minigame</p>
+        </div>
+        <div className="folder" style={{ left: '2%', top: '60%' }} onClick={toggleBrowser}>
+          <i className="material-icons">language</i>
+          <p>Browser</p>
         </div>
         <img src={knight} alt="Knight" style={{ left: '25%', top: '10%', position: 'absolute' }} />
         <div className="folder" style={{ left: '2%', top: '20%' }} onClick={() => toggleTerminal()}>
@@ -250,6 +279,11 @@ function App() {
             </div>
           </div>
           <ScoobyGame />
+        </div>
+      )}
+      {showBrowser && (
+        <div ref={browserRef} style={{ position: 'fixed', zIndex: 100 }}>
+          <Browser onClose={toggleBrowser} />
         </div>
       )}
       {isCrashing && <Crash onComplete={() => setIsCrashing(false)} />}
