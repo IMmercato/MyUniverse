@@ -3,10 +3,18 @@ import './Browser.css'
 
 const Browser = ({ onClose }) => {
     const [url, setUrl] = useState('https://www.google.com')
+    const [inputUrl, setInputUrl] = useState('https://www.google.com')
+    const [history, setHistory] = useState(['https://www.google.com'])
+    const [historyIndex, setHistoryIndex] = useState(0)
     const [isLoading, setIsLoading] = useState(false)
+    const iframeRef = useRef(null)
 
     const favoritesSites = [
-        
+        { name: 'PH', url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ', icon: 'https://image2url.com/images/1765236533640-f05d6b6d-b3c5-4ca8-a44a-b399f65daca6.svg' },
+        { name: 'GutHib', url: 'https://github.com/', icon: 'https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png' },
+        { name: 'localhost', url: 'http://localhost:3000', icon: 'https://cdn.iconscout.com/icon/free/png-512/free-language-icon-svg-download-png-1513808.png?f=webp&w=512' },
+        { name: 'NBA', url: 'https://www.formula1.com/', icon: 'https://support.formula1.com/file-asset/F1_App_Red_Logo_White_Background?v=1' },
+        { name: 'F1', url: 'https://www.nba.com/', icon: 'https://freelogopng.com/images/all_img/1692211631nba-icon.png' }
     ]
 
     const handleNavigate = (newUrl) => {
@@ -15,7 +23,22 @@ const Browser = ({ onClose }) => {
         }
 
         setUrl(newUrl)
+        setInputUrl(newUrl)
         setIsLoading(true)
+
+        const newHistory = history.slice(0, historyIndex + 1)
+        newHistory.push(newUrl)
+        setHistory(newHistory)
+        setHistoryIndex(newHistory.length - 1)
+    }
+
+    const handleSumbit = (e) => {
+        e.preventDefault()
+        handleNavigate(inputUrl)
+    }
+
+    const handleHome = () => {
+        handleNavigate('https://www.google.com')
     }
 
     return (
@@ -28,6 +51,19 @@ const Browser = ({ onClose }) => {
                 <button className="browser-close" onClick={onClose}>
                     <i className="material-icons">close</i>
                 </button>
+                <button onClick={handleHome} title="Home">
+                    <i className="material-icons">home</i>
+                </button>
+
+                <form onSubmit={handleSumbit} className="url-bar">
+                    <i className="material-icons url-icon">
+                        {isLoading ? 'hourglass_empty' : 'lock'}
+                    </i>
+                    <input type="text" value={inputUrl} onChange={(e) => setInputUrl(e.target.value)} placeholder="Enter URL or sesrch..." className="url-input" />
+                    <button type="submit" className="go">
+                        <i className="material-icons">search</i>
+                    </button>
+                </form>
             </div>
             <div className="browser-toolbar">
                 <div className="navigation-buttons">
@@ -40,12 +76,26 @@ const Browser = ({ onClose }) => {
             <div className="favorites-bar">
                 {favoritesSites.map((site, index) => (
                     <button key={index} className="favorite-button" onClick={() => handleNavigate(site.url)} title={site.name}>
-                        <span className="fav-icon">
-                            <img src={site.icon} alt="icon" />
-                        </span>
+                        {site.icon.startsWith('http') ? (
+                            <img src={site.icon} alt={site.name} className="fav-icon-img" />
+                        ) : (
+                            <span className="fav-icon">{site.icon}</span>
+                        )}
                         <span className="fav-name">{site.name}</span>
                     </button>
                 ))}
+            </div>
+
+            <div className="browser-content">
+                <iframe ref={iframeRef} src={url} title="Browser Content" className="browser-iframe" onLoad={() => setIsLoading(false)} sandbox="allow-same-origin allow-scripts allow-popups allow-forms" >
+                    {isLoading && (
+                        <div className="loading-overlay">
+                            <div className="loading-spinner">
+                                <p>Loading...</p>
+                            </div>
+                        </div>
+                    )}
+                </iframe>
             </div>
         </div>
     )
