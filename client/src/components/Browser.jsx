@@ -32,7 +32,7 @@ const Browser = ({ onClose }) => {
         setHistoryIndex(newHistory.length - 1)
     }
 
-    const handleSumbit = (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault()
         handleNavigate(inputUrl)
     }
@@ -79,12 +79,13 @@ const Browser = ({ onClose }) => {
                     <i className="material-icons">close</i>
                 </button>
             </div>
+
             <div className="browser-toolbar">
                 <div className="navigation-buttons">
                     <button onClick={handleBack} disabled={historyIndex === 0} title="Back">
                         <i className="material-icons">arrow_back</i>
                     </button>
-                    <button onClick={handleForward} disabled={historyIndex === history.length -1} title="Forward">
+                    <button onClick={handleForward} disabled={historyIndex === history.length - 1} title="Forward">
                         <i className="material-icons">arrow_forward</i>
                     </button>
                     <button onClick={handleRefresh} title="Refresh">
@@ -95,22 +96,15 @@ const Browser = ({ onClose }) => {
                     </button>
                 </div>
 
-                <form onSubmit={handleSumbit} className="url-bar">
+                <form onSubmit={handleSubmit} className="url-bar">
                     <i className="material-icons url-icon">
                         {isLoading ? 'hourglass_empty' : 'lock'}
                     </i>
-                    <input type="text" value={inputUrl} onChange={(e) => setInputUrl(e.target.value)} placeholder="Enter URL or sesrch..." className="url-input" />
+                    <input type="text" value={inputUrl} onChange={(e) => setInputUrl(e.target.value)} placeholder="Enter URL or search..." className="url-input"/>
                     <button type="submit" className="go">
                         <i className="material-icons">search</i>
                     </button>
                 </form>
-            </div>
-            <div className="browser-toolbar">
-                <div className="navigation-buttons">
-                    <button title="Back">
-                        <i className="material-icons">arrow_back</i>
-                    </button>
-                </div>
             </div>
 
             <div className="favorites-bar">
@@ -127,15 +121,13 @@ const Browser = ({ onClose }) => {
             </div>
 
             <div className="browser-content">
-                <iframe ref={iframeRef} src={url} title="Browser Content" className="browser-iframe" onLoad={() => setIsLoading(false)} sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-modals allow-top-navigation" referrerPolicy="no-referrer-when-downgrade" crossOrigin="anonymous" >
-                    {isLoading && (
-                        <div className="loading-overlay">
-                            <div className="loading-spinner">
-                                <p>Loading...</p>
-                            </div>
-                        </div>
-                    )}
-                </iframe>
+                <iframe ref={iframeRef} src={url} title="Browser Content" className="browser-iframe" onLoad={() => setIsLoading(false)} sandbox="allow-same-origin allow-scripts allow-popups allow-forms"/>
+                {isLoading && (
+                    <div className="loading-overlay">
+                        <div className="loading-spinner"></div>
+                        <p>Loading...</p>
+                    </div>
+                )}
             </div>
 
             <div className="browser-footer">
@@ -148,7 +140,7 @@ const Browser = ({ onClose }) => {
                     <i className="material-icons">zoom_in</i>
                 </span>
             </div>
-        </div >
+        </div>
     )
 }
 

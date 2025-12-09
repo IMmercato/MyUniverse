@@ -7,7 +7,10 @@ const Terminal = ({ onCrash }) => {
                 npm: function (...args) {
                     const command = args.join(' ').trim()
                     if (command === 'run start') {
-                        this.echo('Error: Command "npm run start" failed.')
+                        this.echo('🚀 Server running at http://localhost:3000')
+                        this.echo('wtf("Hello"')
+                        this.echo('           ^')
+                        this.echo('SyntaxError: Unexpected end of input')
                     } else if (command === '-h') {
                         this.echo('install \nrun start')
                     }else if (command === 'install') {
