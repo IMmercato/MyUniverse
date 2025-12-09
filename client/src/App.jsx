@@ -14,6 +14,8 @@ import Chess from './components/Chess'
 import ScoobyGame from './components/ScoobyGame'
 import Crash from './components/Crash'
 import Browser from './components/Browser'
+import Note from './components/Note'
+import { use } from 'react'
 
 const imageMapping = {
   "forever": Ayrton,
@@ -33,8 +35,10 @@ function App() {
   const [showGame, setShowGame] = useState(false)
   const [showTerminal, setShowTerminal] = useState(false)
   const [showBrowser, setShowBrowser] = useState(false)
+  const [showNote, setShowNote] = useState(false)
   const [isCrashing, setIsCrashing] = useState(false)
   const winRef = useRef(null)
+  const noteRef = useRef(null)
   const browserRef = useRef(null)
   const musicRef = useRef(new Audio(music))
 
@@ -94,6 +98,25 @@ function App() {
   }, [openWindow])
 
   useEffect(() => {
+    if (!showNote || !noteRef.current) return
+
+    const draggable = createDraggable(noteRef.current, {
+      trigger: noteRef.current.querySelector('.note-header'),
+      container: document.body,
+      dragSpeed: 1
+    })
+
+    draggable.setX(150)
+    draggable.setY(70)
+
+    return () => {
+      if (draggable && typeof draggable.destroy === 'function') {
+        draggable.destroy()
+      }
+    }
+  }, [showNote])
+
+  useEffect(() => {
     if (!showBrowser || !browserRef.current) return
 
     const draggable = createDraggable(browserRef.current, {
@@ -124,6 +147,9 @@ function App() {
   const toggleTerminal = () => {
     setShowTerminal(prev => !prev)
   }
+  const toggleNote = () => {
+    setShowNote(prev => !prev)
+  }
   const toggleBrowser = () => {
     setShowBrowser(prev => !prev)
   }
@@ -145,6 +171,10 @@ function App() {
         <div className="folder" style={{ left: '2%', top: '40%' }} onClick={() => setShowGame(true)}>
           <i className="material-icons">sports_esports</i>
           <p>Minigame</p>
+        </div>
+        <div className="folder" style={{ top: '30%', right: '2%' }} onClick={toggleNote}>
+          <i className="material-icons">notes</i>
+          <p>Note</p>
         </div>
         <div className="folder" style={{ left: '2%', top: '60%' }} onClick={toggleBrowser}>
           <i className="material-icons">language</i>
@@ -284,6 +314,11 @@ function App() {
       {showBrowser && (
         <div ref={browserRef} style={{ position: 'fixed', zIndex: 100 }}>
           <Browser onClose={toggleBrowser} />
+        </div>
+      )}
+      {showNote && (
+        <div ref={noteRef} style={{ position: 'fixed', zIndex: 100 }}>
+          <Note onClose={toggleNote} />
         </div>
       )}
       {isCrashing && <Crash onComplete={() => setIsCrashing(false)} />}

@@ -14,6 +14,7 @@ const Browser = ({ onClose }) => {
         { name: 'GutHib', url: 'https://github.com/', icon: 'https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png' },
         { name: 'localhost', url: 'http://localhost:3000', icon: 'https://cdn.iconscout.com/icon/free/png-512/free-language-icon-svg-download-png-1513808.png?f=webp&w=512' },
         { name: 'NBA', url: 'https://www.formula1.com/', icon: 'https://support.formula1.com/file-asset/F1_App_Red_Logo_White_Background?v=1' },
+        { name: 'SuperMario', url: 'https://mario-terminal.onrender.com/', icon: 'https://img.icons8.com/?size=100&id=32002&format=png&color=000000' },
         { name: 'F1', url: 'https://www.nba.com/', icon: 'https://freelogopng.com/images/all_img/1692211631nba-icon.png' }
     ]
 
@@ -100,7 +101,7 @@ const Browser = ({ onClose }) => {
                     <i className="material-icons url-icon">
                         {isLoading ? 'hourglass_empty' : 'lock'}
                     </i>
-                    <input type="text" value={inputUrl} onChange={(e) => setInputUrl(e.target.value)} placeholder="Enter URL or search..." className="url-input"/>
+                    <input type="text" value={inputUrl} onChange={(e) => setInputUrl(e.target.value)} placeholder="Enter URL or search..." className="url-input" />
                     <button type="submit" className="go">
                         <i className="material-icons">search</i>
                     </button>
@@ -121,7 +122,7 @@ const Browser = ({ onClose }) => {
             </div>
 
             <div className="browser-content">
-                <iframe ref={iframeRef} src={url} title="Browser Content" className="browser-iframe" onLoad={() => setIsLoading(false)} sandbox="allow-same-origin allow-scripts allow-popups allow-forms"/>
+                <iframe ref={iframeRef} src={url} title="Browser Content" className="browser-iframe" onLoad={() => setIsLoading(false)} sandbox="allow-same-origin allow-scripts allow-popups allow-forms" />
                 {isLoading && (
                     <div className="loading-overlay">
                         <div className="loading-spinner"></div>
