@@ -1,0 +1,48 @@
+.note-container {
+    width: 600px;
+    height: 400px;
+    display: flex;
+    background-color: #1a1a2e;
+    border: 5px solid rgba(160, 235, 255, 0.1);
+    flex-direction: column;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+}
+
+.note-header {
+    background-color: #303030;
+    color: white;
+    padding: 8px 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    -webkit-user-select: none;
+    user-select: none;
+    cursor: move;
+}
+
+.note-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+}
+
+.note-title i {
+    font-size: 18px;
+}
+
+.note-close {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+}
+
+.note-close:hover {
+    background-color: red;
+}
