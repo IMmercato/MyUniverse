@@ -7,8 +7,9 @@ const Note = ({ onClose }) => {
     const [showFileMenu, setShowFileMenu] = useState(false)
     const [showEditMenu, setShowEditMenu] = useState(false)
     const [showHelpMenu, setShowHelpMenu] = useState(false)
-    const [isSaved, setIsSaved] = useState(false)
+    const [isSaved, setIsSaved] = useState(true)
     const [showSaveDialog, setShowSaveDialog] = useState(false)
+    const [saveFileName, setSaveFileName] = useState('untitled.im')
     const textareaRef = useRef(null)
 
     useEffect(() => {
@@ -32,6 +33,11 @@ const Note = ({ onClose }) => {
         return () => clearTimeout(timer)
     }, [content, isSaved])
 
+    const handleContentChange = (e) => {
+        setContent(e.target.value)
+        setIsSaved(false)
+    }
+
     const handleAutoSave = () => {
         localStorage.setItem('notepad-content', content)
         localStorage.setItem('notepad-filename', fileName)
@@ -41,6 +47,13 @@ const Note = ({ onClose }) => {
     const handleSave = () => {
         setShowSaveDialog(true)
         setShowFileMenu(false)
+    }
+
+    const handleSaveConfirm = () => {
+        localStorage.setItem('notepad-content', content)
+        localStorage.setItem('notepad-filename', saveFileName)
+        setFileName(saveFileName)
+        setShowSaveDialog(false)
     }
 
     const handleNew = () => {
@@ -108,6 +121,14 @@ const Note = ({ onClose }) => {
     const handleSelectAll = () => {
         textareaRef.current.select()
         setShowEditMenu(false)
+    }
+
+    const getWorldCount = () => {
+        return content.trim().split(/\s+/).filter(word => word.length > 0).length
+    }
+
+    const getCharCount = () => {
+        return content.length
     }
 
     return (
@@ -198,6 +219,30 @@ const Note = ({ onClose }) => {
                     )}
                 </div>
             </div>
+
+            <textarea ref={textareaRef} className="note-textarea" onChange={handleContentChange} spellCheck="true" value={content} placeholder="Why u want to use my Note? Start typing..."></textarea>
+
+            <div className="note-statusbar">
+                <span>Lines: {content.split('\n').length}</span>
+                <span>Words: {getWorldCount()}</span>
+                <span>Characters: {getCharCount()}</span>
+                <span className={isSaved ? 'saved' : 'unsaved'}>
+                    {isSaved ? '✓ Saved' : '● Unsaved'}
+                </span>
+            </div>
+
+            {showSaveDialog && (
+                <div className="save-dialog-overlay" onClick={() => setShowSaveDialog(false)}>
+                    <div className="save-dialog" onClick={e => e.stopPropagation()}>
+                        <h3>Save As</h3>
+                        <input type="text" value={saveFileName} onChange={(e) => setSaveFileName(e.target.value)} placeholder="Enter filename..." />
+                        <div className="dialog-buttons">
+                            <button onClick={handleSaveConfirm}>Save</button>
+                            <button onClick={() => setShowSaveDialog(false)}>Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     )
 }
